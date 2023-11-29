@@ -37,3 +37,7 @@ class ShortSegment(NamedTuple):
 
 I expect performance will be around 2X realtime setting 3 threads on a Google server.
 
+## Faster Whisperer
+
+If you need to know anything else, it's going to be here:
+https://github.com/SYSTRAN/faster-whisper
