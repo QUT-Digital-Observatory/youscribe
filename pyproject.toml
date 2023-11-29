@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "youteplustrans"
+version = "0.1.0"
+description = ""
+authors = ["Mat Bettinson <mat.bettinson@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+faster-whisper = "^0.10.0"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+youtube-dl = "^2021.12.17"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
