@@ -6,8 +6,8 @@ from time import time
 from youteplustrans.scraper import get_VideoDetails
 from os import remove, path
 from youteplustrans.whisper import WhisperTranscribe, ShortSegment
-import youtube_dl
 from datetime import timedelta
+from yt_dlp import YoutubeDL
 
 class YouteTranscriber:
     def __init__(self, url: str, model: str = "small", cpu_threads: int = 4):
@@ -33,7 +33,7 @@ class YouteTranscriber:
         sourcefilename = videodetails.videoId + ".webm"
         if not path.isfile(sourcefilename):
             starttime = time()
-            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            with YoutubeDL(ydl_opts) as ydl:
                 ydl.download([self.url])
             print("Downloaded in", self._get_elapsed(starttime, time()))
         # <id>.webm in the current directory now
