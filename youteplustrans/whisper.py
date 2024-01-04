@@ -2,13 +2,17 @@
 Copyright: Digital Observatory 2023 <digitalobservatory@qut.edu.au>
 Author: Mat Bettinson <mat.bettinson@qut.edu.au>
 """
-from typing import NamedTuple
-import json
 import csv
 import io
-from datetime import timedelta
-from faster_whisper import WhisperModel
+import json
+import logging
 import time
+from datetime import timedelta
+from typing import NamedTuple
+
+from faster_whisper import WhisperModel
+
+logger = logging.getLogger(__name__)
 
 # class Segment(NamedTuple):
 #     id: int
@@ -23,11 +27,13 @@ import time
 #     no_speech_prob: float
 #     words: Optional[List[Word]]
 
+
 class ShortSegment(NamedTuple):
     id: int
     start: float
     end: float
     text: str
+
 
 class WhisperTranscribe:
     def __init__(
@@ -35,15 +41,26 @@ class WhisperTranscribe:
         sourcefile: str,
         prompt: str | None = None,
         modelname: str = "small",
-        cpu_threads: int = 4
+        cpu_threads: int = 4,
     ):
         self.segmentlist = []
-        model = WhisperModel(modelname, device="cpu", compute_type="int8", cpu_threads=cpu_threads)
-        segments, info  = model.transcribe(sourcefile, initial_prompt=prompt,vad_filter=True)
-        print('language:', info.language, ', probability:', info.language_probability, ', duration:', info.duration)
+        model = WhisperModel(
+            modelname, device="cpu", compute_type="int8", cpu_threads=cpu_threads
+        )
+        segments, info = model.transcribe(
+            sourcefile, initial_prompt=prompt, vad_filter=True
+        )
+        logger.info(
+            "language:",
+            info.language,
+            ", probability:",
+            info.language_probability,
+            ", duration:",
+            info.duration,
+        )
         timestart = time.time()
         self.segmentlist = list(segments)
-        print(f"Transcribed in {time.time() - timestart} seconds")
+        logger.info(f"Transcribed in {time.time() - timestart} seconds")
 
     @property
     def text(self) -> str:
@@ -58,7 +75,7 @@ class WhisperTranscribe:
                     "id": segment.id,
                     "start": round(segment.start, 2),
                     "end": round(segment.end, 2),
-                    "text": segment.text.strip()
+                    "text": segment.text.strip(),
                 }
             )
         return json.dumps(objlist, indent=2)
@@ -97,8 +114,8 @@ class WhisperTranscribe:
                 writer.writerow(seg)
             return output.getvalue()
         except Exception as e:
-            print("An error occurred while creating the CSV string.")
-            print(str(e))
+            logger.error("An error occurred while creating the CSV string.")
+            logger.error(str(e))
             return None
 
     @property

@@ -2,11 +2,15 @@
 Copyright: Digital Observatory 2023 <digitalobservatory@qut.edu.au>
 Author: Mat Bettinson <mat.bettinson@qut.edu.au>
 """
-import requests
-from bs4 import BeautifulSoup
 import json
+import logging
 import re
 from dataclasses import dataclass
+
+import requests
+from bs4 import BeautifulSoup
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -37,7 +41,7 @@ def get_VideoDetails(url: str) -> VideoDetails | None:
 
     # If script tag is not found, return None
     if script is None:
-        print("Script tag not found")
+        logger.warning("Script tag not found")
         return None
 
     # Extract JavaScript object using regex
@@ -45,7 +49,7 @@ def get_VideoDetails(url: str) -> VideoDetails | None:
 
     # If object is not found, return None
     if match is None:
-        print("JavaScript object not found")
+        logger.warning("JavaScript object not found")
         return None
 
     # Decode the JavaScript object into a Python dictionary
