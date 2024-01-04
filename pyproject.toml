@@ -6,7 +6,7 @@ authors = ["Mat Bettinson <mat.bettinson@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 faster-whisper = "^0.10.0"
 beautifulsoup4 = "^4.12.2"
 requests = "^2.31.0"
