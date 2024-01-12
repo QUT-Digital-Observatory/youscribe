@@ -7,10 +7,9 @@ from datetime import timedelta
 from os import path, remove
 from time import time
 
-from yt_dlp import YoutubeDL
-
 from youteplustrans.scraper import get_VideoDetails
 from youteplustrans.whisper import ShortSegment, WhisperTranscribe
+from yt_dlp import YoutubeDL
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +30,7 @@ class YouteTranscriber:
         if videodetails is None:
             logger.error("Failed to get video details")
             return None
-        logger.info("Got metadata in", self._get_elapsed(starttime, time()))
+        logger.info("Got metadata in" + self._get_elapsed(starttime, time()))
 
         prompt = (
             videodetails.title + ": " + videodetails.shortDescription
@@ -43,7 +42,7 @@ class YouteTranscriber:
             starttime = time()
             with YoutubeDL(ydl_opts) as ydl:
                 ydl.download([self.url])
-            logger.info("Downloaded in", self._get_elapsed(starttime, time()))
+            logger.info("Downloaded in" + self._get_elapsed(starttime, time()))
         # <id>.webm in the current directory now
 
         starttime = time()
@@ -51,7 +50,7 @@ class YouteTranscriber:
         transcriber = WhisperTranscribe(
             sourcefilename, prompt, self.model, cpu_threads=self.threads
         )
-        logger.info("Whisper transcribed in", self._get_elapsed(starttime, time()))
+        logger.info("Whisper transcribed in" + self._get_elapsed(starttime, time()))
 
         remove(sourcefilename)
         return transcriber.segments

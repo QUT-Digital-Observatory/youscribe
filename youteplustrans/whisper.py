@@ -51,12 +51,11 @@ class WhisperTranscribe:
             sourcefile, initial_prompt=prompt, vad_filter=True
         )
         logger.info(
-            "language:",
-            info.language,
-            ", probability:",
-            info.language_probability,
-            ", duration:",
-            info.duration,
+            f"""
+            LANGUAGE: {info.language}
+            PROBABILITY: {info.language_probability}
+            DURATION: {info.duration}
+            """
         )
         timestart = time.time()
         self.segmentlist = list(segments)
