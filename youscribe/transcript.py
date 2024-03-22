@@ -13,10 +13,6 @@ class BaseTranscript(ABC):
         pass
 
     @abstractmethod
-    def csv(self):
-        pass
-
-    @abstractmethod
     def json(self):
         pass
 

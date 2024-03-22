@@ -1,9 +1,13 @@
 [tool.poetry]
-name = "youteplustrans"
-version = "0.1.0"
+name = "youscribe"
+version = "0.0.1"
 description = ""
-authors = ["Mat Bettinson <mat.bettinson@gmail.com>"]
+authors = [
+    "Mat Bettinson <mat.bettinson@gmail.com>",
+    "Boyd Thai Hoang Nguyen <thaihoang.nguyen@qut.edu.au",
+]
 readme = "README.md"
+
 
 [tool.poetry.dependencies]
 python = "^3.10"

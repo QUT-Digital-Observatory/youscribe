@@ -4,12 +4,15 @@ Author: Mat Bettinson <mat.bettinson@qut.edu.au>, Boyd Nguyen <thaihoang.nguyen@
 """
 
 import logging
+import time
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Iterable
+from typing import Any
 
 from faster_whisper import WhisperModel
 from faster_whisper.transcribe import Segment
+
+from .transcript import WhisperTranscript
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +51,7 @@ class TranscriptionError(Exception):
 
 class BaseTranscriber(ABC):
     @abstractmethod
-    def transcribe(self):
+    def transcribe(self, file, **kwargs) -> Any:
         pass
 
 
@@ -116,13 +119,13 @@ class WhisperTranscriber(BaseTranscriber):
         )
 
     def transcribe(
-        self, source_file: str | Path, prompt: str | None = None, vad_filter=True
-    ) -> Iterable[Segment]:
+        self, file: str | Path, prompt: str | None = None, vad_filter=True
+    ) -> WhisperTranscript:
         """Transcribe an audio
 
         Parameters
         ----------
-        source_file : str | Path
+        file : str | Path
             Path to the audio file
         prompt : str | None, optional
             Optional text string or iterable of token ids to provide as a
@@ -137,7 +140,7 @@ class WhisperTranscriber(BaseTranscriber):
             If nothing is returned, raise TranscriptionError.
         """
         segments, info = self._model.transcribe(
-            source_file, initial_prompt=prompt, vad_filter=True  # type: ignore
+            file, initial_prompt=prompt, vad_filter=vad_filter  # type: ignore
         )
 
         if not segments and not info:
@@ -147,4 +150,4 @@ class WhisperTranscriber(BaseTranscriber):
             f"Transcription completed. Language: {info.language}. Probability: {info.language_probability}. Duration: {info.duration}"
         )
 
-        return segments
+        return WhisperTranscript(segments)
