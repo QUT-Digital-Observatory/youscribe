@@ -22,6 +22,10 @@ def test_transcribe(urls):
     assert transcription_text
     assert len(transcription_text) > 50
 
+    assert test_transcription.json()
+    assert len(test_transcription.json()) > 5  # type: ignore
+    assert test_transcription.srt()
+
 
 def test_transcribe_invalid(urls):
     with pytest.raises(DownloadError):
