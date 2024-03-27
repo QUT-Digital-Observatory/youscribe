@@ -1,43 +1,68 @@
-# Transcriber for Youte+
+# Transcribe YouTube videos using Whisper models
 
-This is a spin of youtalk, the CLI tool for transcribing YouTube videos. This version is designed to work with the Youte+ web app. It has these changes:
-
-1. Adopts faster_whisperer, a cTransformer's based model for faster transcription.
-2. Uses CPU only, and medium sized 8-bit quant models.
-3. Doesn't have the file caching, downloading, and file output features.
+Adopts [faster_whisperer](https://github.com/SYSTRAN/faster-whisper), a cTransformer's based model for faster transcription.
 
 ## Usage
 
 ```python
-from youteplustrans.transcriber import YouteTranscriber
+from youtescribe import transcribe
 
-# Set model to medium, and 3 CPU threads
-transcriber = YouteTranscriber(
-    "https://www.youtube.com/watch?v=9bZkp7q19f0",
-    "medium",
-    3)
-# Get a list of ShortSegment NamedTuples
-segments = transcriber.transcribe()
-for segment of segments:
-    print(f"id: {segment.id}, start: {segment.start}, end: {segment.end}, text: {segment.text}")
+transcript = transcribe(url="https://www.youtube.com/watch?v=9bZkp7q19f0")
+
+transcript.text()
 ```
-## data format
+
+### Prompting
+
+By default, the video title and description are used as prompts to the transcription model. But you can also specify your own prompt:
 
 ```python
-class ShortSegment(NamedTuple):
-    id: int
-    start: float
-    end: float
-    text: str
+transcript = transcribe(
+    url="https://www.youtube.com/watch?v=9bZkp7q19f0",
+    prompt="Enter prompt here"
+)
 ```
 
-## Performance/deployment
+You can also choose not to include prompt by setting `prompt=False`.
 
-4 core beefy CPU transcribes at about 3.5X realtime. The on-disk model is around 1.5GB for medium.
+```python
+transcript = transcribe(
+    url="https://www.youtube.com/watch?v=9bZkp7q19f0",
+    prompt=False
+)
+```
 
-I expect performance will be around 2X realtime setting 3 threads on a Google server.
+### Working with `WhisperTranscript` objects
 
-## Faster Whisperer
+The `transcribe()` function, if executed successfully, will return a `WhisperTranscript` object. You can view the transcript as plain text, SRT-formatted text, or a Python dictionary.
 
-If you need to know anything else, it's going to be here:
-https://github.com/SYSTRAN/faster-whisper
+```python
+transcript = transcribe(
+    url="https://www.youtube.com/watch?v=9bZkp7q19f0",
+    prompt=False
+)
+
+transcript.text()
+transcript.srt()
+transcript.json()
+transcript.segment
+```
+
+### Customise Whisper model
+
+In the transcribe function, you can pass your own custom Whisper model:
+
+```python
+from youtescribe import WhisperTranscriber
+from youtescribe import models
+
+custom_transcriber = WhisperTranscriber(model_size = models.TINY_EN, cpu_threads=6, device="auto")
+
+transcript = transcribe(
+    url="https://www.youtube.com/watch?v=9bZkp7q19f0",
+    transcriber=custom_transcriber
+)
+transcript.text()
+```
+
+
