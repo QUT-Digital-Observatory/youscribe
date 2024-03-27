@@ -2,6 +2,7 @@
 Copyright: Digital Observatory 2023 <digitalobservatory@qut.edu.au>
 Author: Mat Bettinson <mat.bettinson@qut.edu.au>
 """
+
 import json
 import logging
 import re
@@ -25,7 +26,7 @@ class VideoDetails:
     viewcount: int
 
 
-def get_VideoDetails(url: str) -> VideoDetails | None:
+def get_video_details(url: str) -> VideoDetails | None:
     # Send a HTTP request to the given URL
     res = requests.get(url)
     # Throw an error if status is not 200
