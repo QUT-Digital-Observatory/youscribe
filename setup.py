@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 here = pathlib.Path(__file__).parent.resolve()
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 
 # Get the long description from the README file
 long_description = (here / "README.md").read_text(encoding="utf-8")
@@ -15,7 +15,7 @@ if __name__ == "__main__":
         author="Digital Observatory",
         authhor_email="digitalobservatory@qut.edu.au",
         version=__version__,
-        description="Library to transcribe YouTube video using Whisper model",
+        description="Library to transcribe YouTube videos using Whisper model",
         long_description=long_description,
         long_description_content_type="text/markdown",
         classifiers=[

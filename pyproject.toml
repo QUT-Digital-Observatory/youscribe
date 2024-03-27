@@ -1,22 +1,7 @@
-[tool.poetry]
-name = "youscribe"
-version = "0.0.1"
-description = ""
-authors = [
-    "Mat Bettinson <mat.bettinson@gmail.com>",
-    "Boyd Thai Hoang Nguyen <thaihoang.nguyen@qut.edu.au",
-]
-readme = "README.md"
-
-
-[tool.poetry.dependencies]
-python = "^3.10"
-faster-whisper = "^0.10.0"
-beautifulsoup4 = "^4.12.2"
-requests = "^2.31.0"
-yt-dlp = "^2023.11.16"
-
-
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=42", "wheel", "setuptools_scm>=6.2"]
+
+build-backend = "setuptools.build_meta"
+
+[tool.isort]
+profile = "black"
