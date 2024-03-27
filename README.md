@@ -5,7 +5,7 @@ Adopts [faster_whisperer](https://github.com/SYSTRAN/faster-whisper), a cTransfo
 ## Usage
 
 ```python
-from youtescribe import transcribe
+from youscribe import transcribe
 
 transcript = transcribe(url="https://www.youtube.com/watch?v=9bZkp7q19f0")
 

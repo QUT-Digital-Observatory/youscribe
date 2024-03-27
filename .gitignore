@@ -1,3 +1,4 @@
 *.webm
 *.pyc
 .venv
+*.egg-info
