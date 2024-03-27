@@ -91,26 +91,3 @@ class WhisperTranscript(BaseTranscript):
     #             )
     #         )
     #     return short_segments
-
-    # def csv(self) -> str | None:
-    #     try:
-    #         output = io.StringIO()
-    #         writer = csv.DictWriter(
-    #             output, fieldnames=["id", "start", "end", "text"], quoting=csv.QUOTE_ALL
-    #         )
-    #         writer.writeheader()
-    #         for segment in self.segmentlist:
-    #             seg = {
-    #                 "id": segment.id,
-    #                 "start": round(segment.start, 2),
-    #                 "end": round(segment.end, 2),
-    #                 "text": segment.text.strip(),
-    #             }
-    #             # encode special characters in the 'text' field
-    #             seg["text"] = seg["text"].encode("unicode_escape").decode("utf-8")
-    #             writer.writerow(seg)
-    #         return output.getvalue()
-    #     except Exception as e:
-    #         logger.error("An error occurred while creating the CSV string.")
-    #         logger.error(str(e))
-    #         return None
