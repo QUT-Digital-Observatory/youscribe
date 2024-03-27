@@ -13,7 +13,7 @@ if __name__ == "__main__":
     setup(
         name="youscribe",
         author="Digital Observatory",
-        authhor_email="digitalobservatory@qut.edu.au",
+        author_email="digitalobservatory@qut.edu.au",
         version=__version__,
         description="Library to transcribe YouTube videos using Whisper model",
         long_description=long_description,
