@@ -1,7 +1,7 @@
 import pytest
 from yt_dlp.utils import DownloadError
 
-from youscribe import transcribe
+from src.youscribe import transcribe
 
 
 @pytest.fixture()
